@@ -2,10 +2,10 @@ name: Publish package to GitHub Packages
 on: push
 jobs:
   publish:
-    runs-on: ubuntu-latest 
-    permissions: 
+    runs-on: ubuntu-latest
+    permissions:
       contents: read
-      packages: write 
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -15,4 +15,4 @@ jobs:
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
-          GITHUB_TOKEN: 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
+          GITHUB_TOKEN: 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
