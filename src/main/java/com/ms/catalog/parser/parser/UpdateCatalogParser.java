@@ -1,8 +1,8 @@
-package com.ms.catalog.parser;
+package com.ms.catalog.parser.parser;
 
-import com.ms.catalog.builder.UrlBuilder;
-import com.ms.catalog.exception.CatalogNoResultsException;
-import com.ms.catalog.reponse.*;
+import com.ms.catalog.parser.builder.UrlBuilder;
+import com.ms.catalog.parser.exception.CatalogNoResultsException;
+import com.ms.catalog.parser.reponse.*;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

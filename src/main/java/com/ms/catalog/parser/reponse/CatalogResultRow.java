@@ -1,4 +1,4 @@
-package com.ms.catalog.reponse;
+package com.ms.catalog.parser.reponse;
 
 import lombok.Getter;
 import lombok.Setter;

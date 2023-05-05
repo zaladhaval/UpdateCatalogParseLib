@@ -1,4 +1,4 @@
-package com.ms.catalog.builder;
+package com.ms.catalog.parser.builder;
 
 public class UrlBuilder {
 

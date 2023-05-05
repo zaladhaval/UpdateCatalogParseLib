@@ -1,6 +1,6 @@
-package com.ms.catalog.reponse;
+package com.ms.catalog.parser.reponse;
 
-import com.ms.catalog.exception.ParseHtmlPageException;
+import com.ms.catalog.parser.exception.ParseHtmlPageException;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.nodes.Element;

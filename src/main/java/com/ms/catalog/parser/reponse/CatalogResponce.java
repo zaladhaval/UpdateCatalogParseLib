@@ -1,4 +1,4 @@
-package com.ms.catalog.reponse;
+package com.ms.catalog.parser.reponse;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ public class CatalogResponce {
     private String viewState;
     private String viewStateGenerator;
     public Element nextPage;
-    
+
     public CatalogResponce(Document doc) {
 
         Element Table = doc.getElementById("ctl00_catalogBody_updateMatches");

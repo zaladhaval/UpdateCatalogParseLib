@@ -1,9 +1,9 @@
-package com.ms.catalog.reponse;
+package com.ms.catalog.parser.reponse;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ms.catalog.exception.CatalogErrorException;
-import com.ms.catalog.exception.UnableToCollectUpdateDetailsException;
-import com.ms.catalog.exception.UpdateWasNotFoundException;
+import com.ms.catalog.parser.exception.CatalogErrorException;
+import com.ms.catalog.parser.exception.UnableToCollectUpdateDetailsException;
+import com.ms.catalog.parser.exception.UpdateWasNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.Jsoup;
