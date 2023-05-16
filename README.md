@@ -3,6 +3,14 @@
 This library was made to help me or anyone else using it collect data from https://www.catalog.update.microsoft.com/ in
 comfortable and usable way.
 
+``` java
+<dependency>
+  <groupId>com.microsoft.cataloge</groupId>
+  <artifactId>mscatalog-parser</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
 ## Credits
 
 Big thanks to ryan-jan (https://github.com/ryan-jan) and his MSCatalog poweshell module. At first I was trying to
