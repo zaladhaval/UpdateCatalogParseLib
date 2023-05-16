@@ -3,7 +3,6 @@ com/microsoft/cataloge/parser/parser/UpdateCatalogParser.class
 com/microsoft/cataloge/parser/reponse/CatalogUpdateBase.class
 com/microsoft/cataloge/parser/reponse/CatalogResponce.class
 com/microsoft/cataloge/parser/exception/ParseHtmlPageException.class
-com/microsoft/cataloge/parser/CatalogApplication.class
 com/microsoft/cataloge/parser/exception/UnableToCollectUpdateDetailsException.class
 com/microsoft/cataloge/parser/exception/RequestToCatalogTimedOutException.class
 com/microsoft/cataloge/parser/reponse/CatalogUpdates.class

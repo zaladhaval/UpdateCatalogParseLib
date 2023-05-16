@@ -1,6 +1,5 @@
 package com.microsoft.cataloge.parser.reponse;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.microsoft.cataloge.parser.exception.CatalogErrorException;
 import com.microsoft.cataloge.parser.exception.UnableToCollectUpdateDetailsException;
 import com.microsoft.cataloge.parser.exception.UpdateWasNotFoundException;
@@ -11,6 +10,7 @@ import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +34,6 @@ public class CatalogUpdateBase implements Serializable {
             Pattern.CASE_INSENSITIVE);
 
     private static final Pattern urlRegex = Pattern.compile("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
-    @JsonIgnore
     protected Document _detailsPage;
     private String Title;
     private String UpdateID;
@@ -132,7 +131,7 @@ public class CatalogUpdateBase implements Serializable {
     private void GetDetailsPage(RestTemplate client) throws Exception {
         String reqiestUri = "https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=" + this.UpdateID;
         ResponseEntity<String> responseEntity = client.getForEntity(reqiestUri, String.class);
-        if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new UnableToCollectUpdateDetailsException("Catalog responded with " + responseEntity.getStatusCode() + " code");
         }
         Document document = Jsoup.parse(responseEntity.getBody());
