@@ -1,4 +1,4 @@
-# UpdateCatalogLib
+# UpdateCatalogParseLib
 
 This library was made to help me or anyone else using it collect data from https://www.catalog.update.microsoft.com/ in
 comfortable and usable way.
