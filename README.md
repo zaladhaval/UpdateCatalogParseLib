@@ -7,7 +7,7 @@ comfortable and usable way.
 <dependency>
   <groupId>com.microsoft.cataloge</groupId>
   <artifactId>mscatalog-parser</artifactId>
-  <version>1.0</version>
+  <version>1.3</version>
 </dependency>
 ```
 
