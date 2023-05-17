@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Update Catalog parser Library
 on: push
 jobs:
   publish:
@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: 11
-      - name: Publish package
+          java-version: 17
+      - name: Publish package ms catalog
         run: mvn --batch-mode -DuseGitHubPackages=true deploy
         env:
-          GITHUB_TOKEN: token
+          GITHUB_TOKEN:
