@@ -6,7 +6,7 @@
 
     <groupId>com.microsoft.cataloge</groupId>
     <artifactId>mscatalog-parser</artifactId>
-    <version>1.2</version>
+    <version>1.1.2</version>
 
     <name>
         mscatalog-parser
@@ -22,7 +22,7 @@
 
     <distributionManagement>
         <repository>
-            <id>github</id>
+            <id>mscatalog-parser</id>
             <url>https://maven.pkg.github.com/zaladhaval/UpdateCatalogParseLib</url>
         </repository>
     </distributionManagement>
