@@ -13,11 +13,6 @@ comfortable and usable way.
 
 ## Credits
 
-Big thanks to ryan-jan (https://github.com/ryan-jan) and his MSCatalog poweshell module. At first I was trying to
-re-write this module as Java class library.)
-
-## Refrance
-
 Big thanks to Poushec (https://github.com/Poushec/Poushec.UpdateCatalogParser) and his C# module. At first I refered this library for creating Java compatible library.)
 
 ## How to use it
