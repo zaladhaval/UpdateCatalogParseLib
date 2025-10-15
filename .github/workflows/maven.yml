@@ -19,19 +19,47 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Required permissions for dependency graph submission
+    permissions:
+      contents: write  # Required to submit dependency graph
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+  # Deploy job - publishes package to GitHub Packages on push to main
+  deploy:
+    # Only run on push to main (not on pull requests)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Required to publish to GitHub Packages
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'maven'
+          cache: maven
+          server-id: github  # Value of the distributionManagement/repository/id field in pom.xml
+          server-username: GITHUB_ACTOR  # Environment variable for username
+          server-password: GITHUB_TOKEN  # Environment variable for token
 
-      - name: Build with Maven
-        run: mvn -B clean verify --file pom.xml
-
-      - name: Run tests
-        run: mvn -B test --file pom.xml
+      - name: Publish to GitHub Packages
+        run: mvn --batch-mode deploy -DskipTests
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
