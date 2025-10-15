@@ -2,14 +2,16 @@ package com.microsoft.cataloge.parser.parser;
 
 import com.microsoft.cataloge.parser.builder.UrlBuilder;
 import com.microsoft.cataloge.parser.exception.CatalogNoResultsException;
-import com.microsoft.cataloge.parser.reponse.*;
+import com.microsoft.cataloge.parser.reponse.CatalogDriver;
+import com.microsoft.cataloge.parser.reponse.CatalogResponce;
+import com.microsoft.cataloge.parser.reponse.CatalogResultRow;
+import com.microsoft.cataloge.parser.reponse.CatalogUpdateBase;
+import com.microsoft.cataloge.parser.reponse.CatalogUpdates;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -22,39 +24,29 @@ public class UpdateCatalogParser {
         CatalogResponce responce = null;
         while (responce == null) {
             try {
-                responce = InvokeCatalogRequest(client, url, HttpMethod.GET, "", "", "", "", "");
+                responce = InvokeCatalogRequest(client, url);
             } catch (CatalogNoResultsException e) {
                 return new ArrayList<>();
             }
         }
         List<CatalogResultRow> searchResults = new ArrayList<CatalogResultRow>();
-
+        int count = 1;
         ParseSearchResults(responce, searchResults);
         while (responce.getNextPage() != null) {
             try {
-                CatalogResponce tempResponce = InvokeCatalogRequest(
-                        client,
-                        url,
-                        HttpMethod.POST,
-                        responce.getEventArgument(),
-                        "ctl00$catalogBody$nextPageLinkText",
-                        responce.getEventValidation(),
-                        responce.getViewState(),
-                        responce.getViewStateGenerator()
-                );
-
-                responce = tempResponce;
+                url = new UrlBuilder().searchQuery(Query).pageNumber(count++).build();
+                responce = InvokeCatalogRequest(client, url);
             } catch (CatalogNoResultsException e) {
                 continue;
             }
-
             ParseSearchResults(responce, searchResults);
         }
         return searchResults;
     }
 
 
-    private static void ParseSearchResults(CatalogResponce responcePage, List<CatalogResultRow> existingUpdates) {
+    private static void ParseSearchResults(CatalogResponce responcePage,
+            List<CatalogResultRow> existingUpdates) {
         for (Element row : responcePage.getRows()) {
             if (!row.attr("id").equals("headerRow")) {
                 existingUpdates.add(new CatalogResultRow(row));
@@ -89,23 +81,9 @@ public class UpdateCatalogParser {
         }
     }
 
-    private static CatalogResponce InvokeCatalogRequest(RestTemplate client, String Uri, HttpMethod method, String EventArgument, String EventTarget, String EventValidation, String ViewState, String ViewStateGenerator) throws CatalogNoResultsException {
-        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        ResponseEntity<String> response = null;
-        if (method == HttpMethod.POST) {
-            formData.add("__EVENTTARGET", EventTarget);
-            formData.add("__EVENTARGUMENT", EventArgument);
-            formData.add("__VIEWSTATE", ViewState);
-            formData.add("__VIEWSTATEGENERATOR", ViewStateGenerator);
-            formData.add("__EVENTVALIDATION", EventValidation);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            HttpEntity<MultiValueMap<String, String>> request =
-                    new HttpEntity<MultiValueMap<String, String>>(formData, headers);
-            response = client.postForEntity(Uri, request, String.class);
-        } else {
-            response = client.getForEntity(Uri, String.class);
-        }
+    private static CatalogResponce InvokeCatalogRequest(RestTemplate client, String Uri)
+            throws CatalogNoResultsException {
+        ResponseEntity<String> response = client.getForEntity(Uri, String.class);
         Document document = Jsoup.parse(response.getBody());
         if (document.getElementById("ctl00_catalogBody_noResultText") == null) {
             return new CatalogResponce(document);

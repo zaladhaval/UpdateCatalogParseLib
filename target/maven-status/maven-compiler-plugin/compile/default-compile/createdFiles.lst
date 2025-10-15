@@ -4,9 +4,9 @@ com/microsoft/cataloge/parser/reponse/CatalogUpdateBase.class
 com/microsoft/cataloge/parser/reponse/CatalogResponce.class
 com/microsoft/cataloge/parser/exception/ParseHtmlPageException.class
 com/microsoft/cataloge/parser/exception/UnableToCollectUpdateDetailsException.class
-com/microsoft/cataloge/parser/exception/RequestToCatalogTimedOutException.class
-com/microsoft/cataloge/parser/reponse/CatalogUpdates.class
 com/microsoft/cataloge/parser/reponse/CatalogResultRow.class
+com/microsoft/cataloge/parser/reponse/CatalogUpdates.class
+com/microsoft/cataloge/parser/exception/RequestToCatalogTimedOutException.class
 com/microsoft/cataloge/parser/exception/CatalogErrorException.class
 com/microsoft/cataloge/parser/exception/CatalogNoResultsException.class
 com/microsoft/cataloge/parser/builder/UrlBuilder.class
